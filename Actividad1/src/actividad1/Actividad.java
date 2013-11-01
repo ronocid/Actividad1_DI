@@ -11,7 +11,7 @@ import javax.swing.DefaultListModel;
 public class Actividad extends javax.swing.JFrame {
     private ArrayList <String> elementos;
     
-    public void initElementos(){
+    public void initElementos(){//leo un ficher con el que relleno un arraylist que contendra los datos de la lista y el combo
         elementos=new ArrayList<>();
         File fichero=new File ("elementos.txt");
         if(fichero.exists()){
@@ -38,29 +38,29 @@ public class Actividad extends javax.swing.JFrame {
 
     public Actividad() {
         initComponents();
-        this.borrar.setText("Borrar");
+        this.borrar.setText("Borrar");//Mofifico el texto de los botones añadir y borrar
         this.anadir.setText("Añadir");
-        initElementos();
-        this.lista.setModel(new ModeloLista(elementos));
-        this.combo.setModel(new ModeloCombo(elementos));
-        this.combo.setSelectedIndex(0);
+        initElementos();//inicializo el arrayList que contienen los datos de la lista y el combo llamando al metodo que que lo crea
+        this.lista.setModel(new ModeloLista(elementos));//modifico el modelo por defecto de la lista por el modelo propio y le paso el arrayList con los datos a mostrar
+        this.combo.setModel(new ModeloCombo(elementos));//modifico el modelo por defecto del combo por el modelo propio y le paso el arrayList con los datos a mostrar
+        this.combo.setSelectedIndex(0);//le indico que valor debe tener el combo al iniciarse
         
-        this.combo.addActionListener(new ActionListener(){
+        this.combo.addActionListener(new ActionListener(){//creo un evento en el combo que el elemento seleccionado se muestre en el textfield
             public void actionPerformed(ActionEvent e) {
                 elemento.setText((String)combo.getSelectedItem());
             }
         });
         
-        this.borrar.addActionListener(new ActionListener(){
+        this.borrar.addActionListener(new ActionListener(){//creo la accion del boton de borrar que llama al metodo del modelo con el dato que se encuentra en el textfield
             public void actionPerformed(ActionEvent e) {
-                ((ModeloLista)lista.getModel()).removeElement((Object)elemento.getText());
+                ((ModeloLista)lista.getModel()).removeElement((Object)elemento.getText());//se debe castear el modelo al modelo que estamos utilizando, si no en vez de añadir elementos añadimos componentes
                 //((ModeloCombo)combo.getModel()).removeElement((Object)elemento.getText());
             }
         });
         
-        this.anadir.addActionListener(new ActionListener(){
+        this.anadir.addActionListener(new ActionListener(){//creo la accion del boton de añadir que llama al metodo del modelo con el dato que se encuentra en el textfield
             public void actionPerformed(ActionEvent e) {
-              ((ModeloLista)lista.getModel()).addElement((Object)elemento.getText());
+              ((ModeloLista)lista.getModel()).addElement((Object)elemento.getText());//se debe castear el modelo al modelo que estamos utilizando, si no en vez de añadir elementos añadimos componentes
               //((ModeloCombo)combo.getModel()).addElement((Object)elemento.getText());
             }
         });
