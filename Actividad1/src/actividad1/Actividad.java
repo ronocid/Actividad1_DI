@@ -12,23 +12,25 @@ public class Actividad extends javax.swing.JFrame {
     private ArrayList <String> elementos;
     
     public void initElementos(){
-        elementos=new ArrayList<String>();
+        elementos=new ArrayList<>();
         File fichero=new File ("elementos.txt");
-        BufferedReader br=null;
-        try{
-            br=new BufferedReader(new FileReader(fichero));
-            String s;
-            while((s=br.readLine())!=null){
-                elementos.add(s);
-            }
-        }catch(Exception e){
-            System.out.println("Error");
-        }finally{
-            if(br!=null){
-                try{
-                    br.close();
-                }catch(Exception e){
-                    System.out.println("Error");
+        if(fichero.exists()){
+            BufferedReader br=null;
+            try{
+                br=new BufferedReader(new FileReader(fichero));
+                String s;
+                while((s=br.readLine())!=null){
+                    elementos.add(s);
+                }
+            }catch(Exception e){
+                System.out.println("Error");
+            }finally{
+                if(br!=null){
+                    try{
+                        br.close();
+                    }catch(Exception e){
+                        System.out.println("Error");
+                    }
                 }
             }
         }
@@ -38,15 +40,28 @@ public class Actividad extends javax.swing.JFrame {
         initComponents();
         this.borrar.setText("Borrar");
         this.anadir.setText("Añadir");
+        initElementos();
+        this.lista.setModel(new ModeloLista(elementos));
+        this.combo.setModel(new ModeloCombo(elementos));
+        this.combo.setSelectedIndex(0);
+        
+        this.combo.addActionListener(new ActionListener(){
+            public void actionPerformed(ActionEvent e) {
+                elemento.setText((String)combo.getSelectedItem());
+            }
+        });
+        
         this.borrar.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                ((ModeloLista)lista.getModel()).removeElement(elemento.getText());
+                ((ModeloLista)lista.getModel()).removeElement((Object)elemento.getText());
+                //((ModeloCombo)combo.getModel()).removeElement((Object)elemento.getText());
             }
         });
         
         this.anadir.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e) {
-                ((ModeloCombo)combo.getModel()).addElement(elemento.getText());
+              ((ModeloLista)lista.getModel()).addElement((Object)elemento.getText());
+              //((ModeloCombo)combo.getModel()).addElement((Object)elemento.getText());
             }
         });
     }
@@ -55,14 +70,20 @@ public class Actividad extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane1 = new javax.swing.JScrollPane();
-        lista = new javax.swing.JList();
         combo = new javax.swing.JComboBox();
         elemento = new javax.swing.JTextField();
         borrar = new javax.swing.JButton();
         anadir = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        lista = new javax.swing.JList();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        borrar.setText("jButton2");
+
+        anadir.setText("jButton1");
 
         lista.setModel(new javax.swing.AbstractListModel() {
             String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
@@ -70,13 +91,6 @@ public class Actividad extends javax.swing.JFrame {
             public Object getElementAt(int i) { return strings[i]; }
         });
         jScrollPane1.setViewportView(lista);
-        lista.getAccessibleContext().setAccessibleName("lista");
-
-        combo.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        borrar.setText("jButton2");
-
-        anadir.setText("jButton1");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -85,8 +99,8 @@ public class Actividad extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(41, 41, 41)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
-                    .addComponent(combo, 0, 217, Short.MAX_VALUE))
+                    .addComponent(combo, 0, 217, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 83, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
@@ -101,7 +115,7 @@ public class Actividad extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addContainerGap(198, Short.MAX_VALUE)
                         .addComponent(elemento, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(72, 72, 72)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -110,8 +124,8 @@ public class Actividad extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGap(43, 43, 43)
                         .addComponent(combo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(74, 74, 74))
         );
 

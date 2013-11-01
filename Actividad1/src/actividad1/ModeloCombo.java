@@ -1,46 +1,40 @@
 
 package actividad1;
 
+import java.util.ArrayList;
+import javax.swing.AbstractListModel;
 import javax.swing.ComboBoxModel;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.event.ListDataListener;
 
-public class ModeloCombo implements ComboBoxModel {
+public class ModeloCombo extends DefaultComboBoxModel{
+    private ArrayList lista;
 
-    @Override
-    public void setSelectedItem(Object anItem) {
-        this.setSelectedItem(anItem);
+    public ModeloCombo(){
+        this.lista=new ArrayList ();
     }
-
-    @Override
-    public Object getSelectedItem() {
-        return this.getSelectedItem();
+    
+     public ModeloCombo(ArrayList list){
+        this.lista=list;
     }
-
+    
     @Override
     public int getSize() {
-        return this.getSize();
+        return this.lista.size();
     }
 
     @Override
     public Object getElementAt(int index) {
-        return this.getElementAt(index);
-    }
-
-    @Override
-    public void addListDataListener(ListDataListener l) {
-        this.addListDataListener(l);
-    }
-
-    @Override
-    public void removeListDataListener(ListDataListener l) {
-        this.removeListDataListener(l);
+        return this.lista.get(index);
     }
     
-    public void addElement(Object elemento){
-        this.addElement(elemento);
+    public void addElement(Object element){
+        this.lista.add(element);
+        this.fireIntervalRemoved(this,this.lista.size(),this.lista.size()+1);
     }
     
-    public void removeElement(Object elemento){
-        this.removeElement(elemento);
-    }
+    public void removeElement(Object element){
+        this.lista.remove(element);
+        this.fireIntervalAdded(this,this.lista.size(),this.lista.size()+1);
+    }    
 }
