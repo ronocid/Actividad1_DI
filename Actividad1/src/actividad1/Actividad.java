@@ -6,7 +6,6 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.util.ArrayList;
-import javax.swing.DefaultListModel;
 
 public class Actividad extends javax.swing.JFrame {
     private ArrayList <String> elementos;

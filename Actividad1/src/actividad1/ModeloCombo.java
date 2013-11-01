@@ -2,10 +2,7 @@
 package actividad1;
 
 import java.util.ArrayList;
-import javax.swing.AbstractListModel;
-import javax.swing.ComboBoxModel;
 import javax.swing.DefaultComboBoxModel;
-import javax.swing.event.ListDataListener;
 
 public class ModeloCombo extends DefaultComboBoxModel{
     private ArrayList lista;
