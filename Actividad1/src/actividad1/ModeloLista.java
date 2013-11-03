@@ -32,7 +32,7 @@ public class ModeloLista extends AbstractListModel{
     
     public void removeElement(Object element){
         this.lista.remove(element);
-        this.fireIntervalAdded(this,this.lista.size(),this.lista.size()+1);
+        this.fireIntervalAdded(this,this.lista.size(),this.lista.size()-1);
     }
     
 

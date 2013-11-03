@@ -8,10 +8,12 @@ import java.io.FileReader;
 import java.util.ArrayList;
 
 public class Actividad extends javax.swing.JFrame {
-    private ArrayList <String> elementos;
+    private ArrayList <String> elementosLista;
+    private ArrayList <String> elementosCombo;
     
     public void initElementos(){//leo un ficher con el que relleno un arraylist que contendra los datos de la lista y el combo
-        elementos=new ArrayList<>();
+        elementosLista=new ArrayList<>();
+         elementosCombo=new ArrayList<>();
         File fichero=new File ("elementos.txt");
         if(fichero.exists()){
             BufferedReader br=null;
@@ -19,7 +21,8 @@ public class Actividad extends javax.swing.JFrame {
                 br=new BufferedReader(new FileReader(fichero));
                 String s;
                 while((s=br.readLine())!=null){
-                    elementos.add(s);
+                    elementosLista.add(s);
+                    elementosCombo.add(s);
                 }
             }catch(Exception e){
                 System.out.println("Error");
@@ -40,8 +43,8 @@ public class Actividad extends javax.swing.JFrame {
         this.borrar.setText("Borrar");//Mofifico el texto de los botones añadir y borrar
         this.anadir.setText("Añadir");
         initElementos();//inicializo el arrayList que contienen los datos de la lista y el combo llamando al metodo que que lo crea
-        this.lista.setModel(new ModeloLista(elementos));//modifico el modelo por defecto de la lista por el modelo propio y le paso el arrayList con los datos a mostrar
-        this.combo.setModel(new ModeloCombo(elementos));//modifico el modelo por defecto del combo por el modelo propio y le paso el arrayList con los datos a mostrar
+        this.lista.setModel(new ModeloLista(elementosLista));//modifico el modelo por defecto de la lista por el modelo propio y le paso el arrayList con los datos a mostrar
+        this.combo.setModel(new ModeloCombo(elementosCombo));//modifico el modelo por defecto del combo por el modelo propio y le paso el arrayList con los datos a mostrar
         this.combo.setSelectedIndex(0);//le indico que valor debe tener el combo al iniciarse
         
         this.combo.addActionListener(new ActionListener(){//creo un evento en el combo que el elemento seleccionado se muestre en el textfield
@@ -53,14 +56,14 @@ public class Actividad extends javax.swing.JFrame {
         this.borrar.addActionListener(new ActionListener(){//creo la accion del boton de borrar que llama al metodo del modelo con el dato que se encuentra en el textfield
             public void actionPerformed(ActionEvent e) {
                 ((ModeloLista)lista.getModel()).removeElement((Object)elemento.getText());//se debe castear el modelo al modelo que estamos utilizando, si no en vez de añadir elementos añadimos componentes
-                //((ModeloCombo)combo.getModel()).removeElement((Object)elemento.getText());
+                ((ModeloCombo)combo.getModel()).removeElement((Object)elemento.getText());
             }
         });
         
         this.anadir.addActionListener(new ActionListener(){//creo la accion del boton de añadir que llama al metodo del modelo con el dato que se encuentra en el textfield
             public void actionPerformed(ActionEvent e) {
               ((ModeloLista)lista.getModel()).addElement((Object)elemento.getText());//se debe castear el modelo al modelo que estamos utilizando, si no en vez de añadir elementos añadimos componentes
-              //((ModeloCombo)combo.getModel()).addElement((Object)elemento.getText());
+              ((ModeloCombo)combo.getModel()).addElement((Object)elemento.getText());
             }
         });
     }
